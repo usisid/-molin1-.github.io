@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>举报页面</title>
+    <style>
+        /* Reset some basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 20px;
+            position: relative; /* 添加相对定位 */
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 24px;
+            color: #2c3e50;
+        }
+
+        header p {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #2c3e50;
+        }
+
+        input, select, textarea {
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button.submitBtn {
+            padding: 12px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.submitBtn:hover {
+            background-color: #2980b9;
+        }
+
+        .confirmationMessage {
+            text-align: center;
+            font-size: 16px;
+            color: #27ae60;
+            margin-top: 20px;
+        }
+
+        .errorMessage {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .additionalInfo {
+            display: none;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        /* 动态诗句横幅样式 */
+        .poem-banner {
+            position: fixed;
+            bottom: 0; /* 修改为bottom: 0; */
+            width: 100%;
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            font-family: 'KaiTi', serif;
+            overflow: hidden;
+            white-space: nowrap;
+            z-index: 1000;
+        }
+
+        .poem-banner p {
+            display: inline-block;
+            animation: scroll 15s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* Molin专用 动画 */
+        .molin-text {
+            font-size: 2.5em;
+            font-weight: bold;
+            background: linear-gradient(90deg, #e74c3c, #3498db, #9b59b6);
+            background-clip: text;
+            color: transparent;
+            animation: gradientShift 3s ease infinite, bounce 1s infinite;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes bounce {
+            0% {
+                transform: translateY(0);
+            }
+            25% {
+                transform: translateY(-15px);
+            }
+            50% {
+                transform: translateY(0);
+            }
+            75% {
+                transform: translateY(-8px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 动态诗句横幅 -->
+    <div class="poem-banner">
+        <p>春风吹拂梨花雪，白如云朵飘香里</p>
+        <p>庭中三千梨花树，再无一朵入我心</p>
+        <p>我与旧事归于尽，来年依旧迎花开</p>
+        <p>时光怱怱人已老，唯愿心中花不败</p>
+        <p>——冯唐《三十六计》</p>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>举报中心</h1>
+            <p>请详细填写以下信息，我们将尽快处理您的举报。</p>
+            <div class="molin-text">Molin专用</div> <!-- Molin文本动画 -->
+        </header>
+
+        <form id="reportForm">
+            <label for="reporterName">举报人姓名：</label>
+            <input type="text" id="reporterName" name="reporterName" placeholder="请输入您的姓名" required>
+
+            <label for="reportType">举报类型：</label>
+            <select id="reportType" name="reportType" required>
+                <option value="" disabled selected>请选择举报类型</option>
+                <option value="违规行为">违规行为</option>
+                <option value="骚扰行为">骚扰行为</option>
+                <option value="诈骗行为">诈骗行为</option>
+                <option value="不当言论">不当言论</option>
+                <option value="侵犯隐私">侵犯隐私</option>
+                <option value="内容垃圾信息">内容垃圾信息</option>
+                <option value="其他">其他</option>
+            </select>
+
+            <div id="additionalInfo" class="additionalInfo">
+                <label for="specificBehavior">具体行为描述：</label>
+                <textarea id="specificBehavior" name="specificBehavior" placeholder="请描述具体的违规行为" rows="5"></textarea>
+            </div>
+
+            <label for="reportDetails">举报详情：</label>
+            <textarea id="reportDetails" name="reportDetails" placeholder="请描述举报的详细情况" rows="5" required></textarea>
+
+            <button type="submit" class="submitBtn">提交举报</button>
+        </form>
+
+        <div id="confirmationMessage" class="confirmationMessage" style="display:none;">
+            <p>感谢您的举报！我们将尽快处理您的问题。</p>
+        </div>
+        <div id="errorMessage" class="errorMessage" style="display:none;"></div>
+    </div>
+    
+    <script>
+        // 表单验证逻辑
+        const validateForm = (formData) => {
+            if (!formData.reporterName || !formData.reportType || !formData.reportDetails) {
+                return '所有字段都是必填项。';
+            }
+            return null;
+        };
+
+        // 获取当天的日期字符串，用于存储
+        const getTodayDate = () => {
+            const today = new Date();
+            return today.toISOString().split('T')[0]; // "YYYY-MM-DD"
+        };
+
+        // 检查提交次数
+        const checkSubmitLimit = () => {
+            const today = getTodayDate();
+            const submissionCount = localStorage.getItem(today) || 0;
+
+            if (submissionCount >= 2) {
+                alert('您今天已经提交了两次举报，无法再次提交！');
+                return false;
+            }
+
+            // 增加提交次数
+            localStorage.setItem(today, parseInt(submissionCount) + 1);
+            return true;
+        };
+
+        // 提交表单时的处理逻辑
+        const handleSubmit = (event) => {
+            event.preventDefault();
+
+            // 检查提交限制
+            if (!checkSubmitLimit()) return;
+
+            const formData = {
+                reporterName: document.getElementById('reporterName').value,
+                reportType: document.getElementById('reportType').value,
+                specificBehavior: document.getElementById('specificBehavior').value,
+                reportDetails: document.getElementById('reportDetails').value
+            };
+
+            const errorMessage = validateForm(formData);
+            if (errorMessage) {
+                displayError(errorMessage);
+                return;
+            }
+
+            // 显示确认信息并清空表单
+            displayConfirmation();
+            resetForm();
+        };
+
+        // 显示确认信息
+        const displayConfirmation = () => {
+            document.getElementById('confirmationMessage').style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+        };
+
+        // 显示错误信息
+        const displayError = (message) => {
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorMessage').style.display = 'block';
+            document.getElementById('confirmationMessage').style.display = 'none';
+        };
+
+        // 清空表单
+        const resetForm = () => {
+            document.getElementById('reportForm').reset();
+            document.getElementById('additionalInfo').style.display = 'none';
+        };
+    // 监听举报类型变化，动态显示额外的行为描述
+    document.getElementById('reportType').addEventListener('change', function() {
+        const selectedType = this.value;
+        const additionalInfoDiv = document.getElementById('additionalInfo');
+
+        // 根据选择的举报类型来显示/隐藏“具体行为描述”字段
+        if (selectedType === '违规行为' || selectedType === '其他') {
+            additionalInfoDiv.style.display = 'block';
+        } else {
+            additionalInfoDiv.style.display = 'none';
+        }
+    });
+
+    // 绑定表单提交事件
+    document.getElementById('reportForm').addEventListener('submit', handleSubmit);
+</script>
